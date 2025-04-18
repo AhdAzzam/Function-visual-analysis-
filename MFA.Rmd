@@ -160,9 +160,15 @@ Both functions share the same exponential decay term $e^{-\sqrt{x^2 + y^2}}$ , w
 
 The difference is mainly in the phase of the oscillation.
 
-## ✅ 6. Conclusion
+## ✅ 5.Conclusion
 
 This project was a journey through mathematical curiosity and visual exploration. By analyzing the function $f(x, y) = \sin(x^2 + y^2) \cdot e^{-\sqrt{x^2 + y^2}}$ ,and comparing it to a related cosine-based function, I was able to better understand how oscillatory behavior interacts with decay in two dimensions. Visualizing these functions using 3D plots helped reveal subtle yet important differences that might be missed through equations alone. This experience reinforced the power of combining mathematical analysis with modern computational tools like R and Plotly.
+
+## 6.Resources and Code
+
+You can find the full source code and files used in this project at the GitHub repository below:
+
+[Github-Function Visual Analysis](https://github.com/AhdAzzam/Function-visual-analysis-)
 
 ------------------------------------------------------------------------
 
