@@ -1,0 +1,169 @@
+---
+title: "Mathematical Function Analysis"
+author: "Ahed Azzam"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    highlight: kate
+    css: custom.css
+---
+
+## 1.Introduction
+
+Mathematics and Technology — ***What a combination !*** In a world driven by data and powered by algorithms, mathematics has evolved from abstract theory to a practical engine behind modern technology. This project is a personal exploration of that intersection: analyzing a two-variable function using both classical mathematical tools and modern computational techniques in R.
+
+What started as a simple curiosity turned into a hands-on journey through partial derivatives, surface plots, and contour lines — revealing how a mathematical expression can come to life through visualization and analysis. Though the function may appear modest at first glance, diving into its behavior unveils a rich structure worth exploring.
+
+I chose this function :
+
+$$
+f(x, y) = \sin(x^2 + y^2) \cdot e^{-\sqrt{x^2 + y^2}}
+$$
+
+### R Implementation
+
+```{r definice-function, echo=FALSE, message=FALSE,warning=FALSE}
+
+f <- function(x, y) {
+  r <- sqrt(x^2 + y^2)
+  sin(x^2+y^2) * exp(-sqrt(x^2 + y^2))
+}
+```
+
+$$
+r = \sqrt{x^2 + y^2}
+$$
+
+$$
+f(x, y) = \sin(r^2) \cdot e^{-r}
+$$
+
+## 2.***Why this function ?***
+
+The main reason I chose this function is my curiosity to understand its mathematical behavior. I wanted to study a function that combines both oscillation and decay, as the interaction between the sine and exponential functions presents an intriguing behavior. Additionally, the graph was an essential part of this understanding, as it helps to visualize the function’s behavior more clearly and provides a visual understanding of the changes occurring in its values.
+
+## 3.Visual Analysis
+
+### 3D Surface Plot:
+
+```{r setup,include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(rgl)
+library(tidyr)
+```
+
+```{r p1}
+f <- function(x, y) {
+  r <- sqrt(x^2 + y^2)
+  sin(x^2 + y^2) * exp(-sqrt(x^2 + y^2))
+}
+
+# Create a grid of x and y values
+x1 <- seq(-5, 5, length.out = 100)
+y1 <- seq(-5, 5, length.out = 100)
+
+# Compute the z values for the first function
+z1 <- outer(x1, y1, Vectorize(f))
+
+# Plot the 3D surface for the first function
+p1 <- plot_ly(x = ~x1, y = ~y1, z = ~z1,scene="scene") %>%
+  add_surface(colorscale = "viridis") %>%
+   layout(
+     scene = list(
+      xaxis = list(title = "x1"),
+      yaxis = list(title = "y1"),
+      zaxis = list(title = "f(x, y)")
+    )
+)
+     
+p1
+```
+
+we show the 3D surface resulting from the function. This surface represents the effects of ***oscillation*** from the sine function and ***attenuation*** from the exponential function simultaneously. It is noticeable how the values change as the distance from the center ***increases***. The colors range from blue (low values) to red (high values), helping to understand how the values are distributed.
+
+### Contour Plot
+
+```{r Contour}
+
+f <- function(x, y) {
+  r <- sqrt(x^2 + y^2)
+  sin(x^2+y^2) * exp(-sqrt(x^2 + y^2))
+}
+x <- seq(-5, 5, by=0.1)
+y <- seq(-5, 5, by=0.1)
+z1 <- outer(x,y,Vectorize(f))
+contour(x,y,z1,main="Contour Plot",xlab="x",ylab="y",col="red")
+
+```
+
+In the contour plot, we can observe how values are distributed across the $x$, $𝑦$ , xy-plane. The contour lines are closely spaced in the center where values are high, and gradually spread apart as the values decrease towards the edges. These lines show how the surface peaks at the center and tapers off at the boundaries.
+
+## 4. Comparison with the Function g(x,y)
+
+$$
+g(x,y)=\cos(x^2+y^2)\cdot e^{-\sqrt{x^2 + y^2}}
+$$
+
+```{r p2 ,echo=FALSE, message=FALSE,warning=FALSE}
+g <- function(x, y) {
+  r <- sqrt(x^2 + y^2)
+  cos(x^2 + y^2) * exp(-sqrt(x^2 + y^2))
+}
+x2 <- seq(-5, 5, length.out = 100)
+y2 <- seq(-5, 5, length.out = 100)
+# Compute the z values for the second function
+z2 <- outer(x2, y2, Vectorize(g))
+
+# Plot the 3D surface for the second function
+p2 <- plot_ly(x = ~x2, y = ~y2, z = ~z2,scene="scene2") %>%
+  add_surface(colorscale = "viridis")%>%
+   layout(
+      scene2 = list(
+      xaxis = list(title = "x2"),
+      yaxis = list(title = "y2"),
+      zaxis = list(title = "g(x, y)")
+    )
+   )
+ 
+```
+
+```{r sub ,warning=FALSE}
+
+subplot(p1, p2, nrows = 1,margin = 0.75) %>%
+  layout(
+    scene = list(
+      domain = list(x = c(0, 0.5)),
+      xaxis = list(title = "x1"),
+      yaxis = list(title = "y1"),
+      zaxis = list(title = "f(x, y)")
+    ),
+    scene2 = list(
+      domain = list(x = c(0.5, 1)),
+      xaxis = list(title = "x2"),
+      yaxis = list(title = "y2"),
+      zaxis = list(title = "g(x, y)")
+    )
+  ) 
+   
+```
+
+Both functions share the same exponential decay term $e^{-\sqrt{x^2 + y^2}}$ , which causes the waves to fade as we move away from the center. The main difference lies in the oscillatory part:
+
+***f(x, y)*** uses the sine function, starting from zero at the center and producing smooth wave patterns.
+
+***g(x, y)*** uses the cosine function, starting from a maximum value at the center and showing a slightly different wave structure.
+
+The difference is mainly in the phase of the oscillation.
+
+## ✅ 6. Conclusion
+
+This project was a journey through mathematical curiosity and visual exploration. By analyzing the function $f(x, y) = \sin(x^2 + y^2) \cdot e^{-\sqrt{x^2 + y^2}}$ ,and comparing it to a related cosine-based function, I was able to better understand how oscillatory behavior interacts with decay in two dimensions. Visualizing these functions using 3D plots helped reveal subtle yet important differences that might be missed through equations alone. This experience reinforced the power of combining mathematical analysis with modern computational tools like R and Plotly.
+
+------------------------------------------------------------------------
+
+📁 *Prepared using RMarkdown in RStudio.*
