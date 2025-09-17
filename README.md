@@ -1,7 +1,7 @@
 # Mathematical Function Analysis
 
 Overview
-This project explores the behavior of a two-variable function f(x, y) = \sin(x^2 + y^2) \cdot e^{-\sqrt{x^2 + y^2}}  through mathematical analysis and visualization using R. The goal is to study how the sine and exponential functions interact in two dimensions and to visualize their combined behavior through 3D surface plots and contour plots.
+This project explores the behavior of a two-variable function \(f\left(x,y\right)=\textrm{sin}\left(x^{2}+y^{2}\right)\cdot e^{-\sqrt{x^{2}+y^{2}}}\) through mathematical analysis and visualization using R. The goal is to study how the sine and exponential functions interact in two dimensions and to visualize their combined behavior through 3D surface plots and contour plots.
 
 Additionally, the project compares this function with a related cosine-based function g(x,y)=\cos(x^2+y^2)\cdot e^{-\sqrt{x^2 + y^2}} , providing a visual and mathematical comparison of the two.
 Key Concepts
